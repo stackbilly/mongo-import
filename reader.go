@@ -6,6 +6,7 @@ import (
 	"os"
 )
 
+// csv file reader
 func CSVReader(filename string) ([][]string, error) {
 	file, err := os.Open(filename)
 	if err != nil {
