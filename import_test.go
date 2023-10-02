@@ -20,7 +20,7 @@ func TestCSVImport(t *testing.T) {
 	assert.Equal(t, records_len-1, got, "Expected number of records to be inserted")
 }
 
-// test function to get collection
+// test function to get mongo collection
 func getCollection() *mgo.Collection {
 	session, err := mgo.Dial("localhost")
 	if err != nil {
