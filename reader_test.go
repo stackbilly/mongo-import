@@ -45,7 +45,7 @@ func TestCSVReader(t *testing.T) {
 	}
 }
 
-// test function
+// sample test function for CSVReader
 func CSV_Reader(filename string) [][]string {
 	file, err := os.Open(filename)
 	if err != nil {
