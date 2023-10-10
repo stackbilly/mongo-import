@@ -5,6 +5,7 @@ This package is meant to be used to convert data from a csv file and write it in
 # mongo-import tools
 - **csvreader**: Read csv records & entries from a csv file
 - **csvimport**: convert data from csv and write into a new mongodb collection
+- **jsonreader**: Read json entries from a json file
 
 ## overview
 
