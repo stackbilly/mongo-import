@@ -8,6 +8,7 @@ import (
 	"gopkg.in/mgo.v2"
 )
 
+// TestCSVImport test func for CSVImport
 func TestCSVImport(t *testing.T) {
 	records := CSV_Reader("sample.csv")
 	records_len := len(records)
