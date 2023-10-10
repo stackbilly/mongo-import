@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// TestJsonReader test function for json file reader
 func TestJsonReader(t *testing.T) {
 	type args struct {
 		filename string
