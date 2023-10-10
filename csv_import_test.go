@@ -9,8 +9,8 @@ import (
 )
 
 func TestCSVImport(t *testing.T) {
-	records_len := len(CSV_Reader("sample.csv"))
 	records := CSV_Reader("sample.csv")
+	records_len := len(records)
 	collection := getCollection()
 	if collection == nil {
 		t.Fatalf("Failed to establish Mongodb collection connection")
