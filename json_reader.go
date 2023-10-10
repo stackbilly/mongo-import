@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-// JSONFileReader func json file reader
+// JSONFileReader function json file reader
 func JSONFileReader(filename string) (map[string]interface{}, error) {
 	substring := strings.Split(filename, ".")
 	var extension string
