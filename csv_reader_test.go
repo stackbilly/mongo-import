@@ -27,8 +27,14 @@ func TestCSVReader(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name:    "case2: should return err",
+			name:    "case2: should return err for non-existent file",
 			args:    args{"sample456.csv"},
+			want:    nil,
+			wantErr: true,
+		},
+		{
+			name:    "case3: should return error for non csv file passed",
+			args:    args{filename: "test.json"},
 			want:    nil,
 			wantErr: true,
 		},
@@ -63,3 +69,17 @@ func CSV_Reader(filename string) [][]string {
 	}
 	return records
 }
+
+// Running tool: C:\Program Files\Go\bin\go.exe test -timeout 30s -run ^TestCSVReader$ github.com/Livingstone-Billy/mongo-import
+
+// === RUN   TestCSVReader
+// === RUN   TestCSVReader/case1:_should_return_csv_records_as_slice
+// --- PASS: TestCSVReader/case1:_should_return_csv_records_as_slice (0.00s)
+// === RUN   TestCSVReader/case2:_should_return_err_for_non-existent_file
+// 2023/10/10 20:13:42 Error opening csv file open sample456.csv: The system cannot find the file specified.
+// --- PASS: TestCSVReader/case2:_should_return_err_for_non-existent_file (0.00s)
+// === RUN   TestCSVReader/case3:_should_return_error_for_non_csv_file_passed
+// --- PASS: TestCSVReader/case3:_should_return_error_for_non_csv_file_passed (0.00s)
+// --- PASS: TestCSVReader (0.01s)
+// PASS
+// ok      github.com/Livingstone-Billy/mongo-import       0.388s
