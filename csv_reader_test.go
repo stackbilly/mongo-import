@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// TestCSVReader test function -> CSVReader
 func TestCSVReader(t *testing.T) {
 	type args struct {
 		filename string
