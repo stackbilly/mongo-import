@@ -8,6 +8,7 @@ import (
 	"gopkg.in/mgo.v2"
 )
 
+// TestJsonImport test function for json mongodb import
 func TestJsonImport(t *testing.T) {
 	contents, _ := JSONFileReader("test.json")
 	type args struct {
