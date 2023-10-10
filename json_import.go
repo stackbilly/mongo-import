@@ -6,7 +6,7 @@ import (
 	"gopkg.in/mgo.v2"
 )
 
-// JSONImport func import and write json contents into a mongodb collection
+// JSONImport function import/write json contents into a mongodb collection
 func JSONImport(collection *mgo.Collection, contents map[string]interface{}) (int, error) {
 	bulk := collection.Bulk()
 	bulk.Unordered()
