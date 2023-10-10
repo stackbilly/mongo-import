@@ -7,7 +7,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-// CSVImport func to import csv to mongodb
+// CSVImport func to import csv entries to mongodb
 func CSVImport(collection *mgo.Collection, records [][]string, start, end int) int {
 	slice_of_records := make([][]string, len(records))
 	copy(slice_of_records, records)
