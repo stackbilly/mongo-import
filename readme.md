@@ -37,7 +37,7 @@ import (
 	"log"
 	"time"
 
-	mongoimport "github.com/Livingstone-Billy/mongo-import" //import package
+	mongoimport "github.com/stackbilly/mongo-import" //import package
 	"gopkg.in/mgo.v2"
 )
 
