@@ -21,7 +21,7 @@ This package is meant to be used to convert data from a csv/json file and write 
 Please ensure you have installed Go v1.21 or later
 
 ```sh
-go get github.com/Livingstone-Billy/mongo-import
+go get github.com/stackbilly/mongo-import
 ```
 From source code
 ```sh
