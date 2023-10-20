@@ -25,7 +25,7 @@ go get github.com/stackbilly/mongo-import
 ```
 From source code
 ```sh
-git clone https://github.com/Livingstone-Billy/mongo-import.git
+git clone https://github.com/stackbilly/mongo-import.git
 cd mongo-import
 ```
 ## Example
