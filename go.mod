@@ -1,4 +1,4 @@
-module github.com/Livingstone-Billy/mongo-import
+module github.com/stackbilly/mongo-import
 
 go 1.21.1
 
