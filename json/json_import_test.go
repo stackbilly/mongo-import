@@ -1,4 +1,4 @@
-package mongoimport
+package json
 
 import (
 	"log"
