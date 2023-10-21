@@ -1,4 +1,4 @@
-package mongoimport
+package csv
 
 import (
 	"log"
@@ -9,17 +9,17 @@ import (
 
 // CSVImport func to import csv entries to mongodb
 func CSVImport(collection *mgo.Collection, records [][]string, start, end int) int {
-	slice_of_records := make([][]string, len(records))
-	copy(slice_of_records, records)
-	col_names := slice_of_records[0]
+	sliceOfRecords := make([][]string, len(records))
+	copy(sliceOfRecords, records)
+	colNames := sliceOfRecords[0]
 
 	bulk := collection.Bulk()
 	bulk.Unordered()
 
 	for i := start; i < end; i++ {
 		bsonData := make(bson.M)
-		for j := 0; j < len(col_names); j++ {
-			bsonData[col_names[j]] = records[i][j]
+		for j := 0; j < len(colNames); j++ {
+			bsonData[colNames[j]] = records[i][j]
 		}
 		bulk.Insert(bsonData)
 	}

@@ -1,4 +1,4 @@
-package mongoimport
+package csv
 
 import (
 	"log"
@@ -10,15 +10,15 @@ import (
 
 // TestCSVImport test func for CSVImport
 func TestCSVImport(t *testing.T) {
-	records := CSV_Reader("sample.csv")
-	records_len := len(records)
+	records := CsvReader("sample.csv")
+	recordsLen := len(records)
 	collection := getCollection()
 	if collection == nil {
 		t.Fatalf("Failed to establish Mongodb collection connection")
 	}
 
-	got := CSVImport(collection, records, 1, records_len)
-	assert.Equal(t, records_len-1, got, "Expected number of records to be inserted")
+	got := CSVImport(collection, records, 1, recordsLen)
+	assert.Equal(t, recordsLen-1, got, "Expected number of records to be inserted")
 }
 
 // test function to get mongo collection

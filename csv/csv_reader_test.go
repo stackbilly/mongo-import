@@ -1,4 +1,4 @@
-package mongoimport
+package csv
 
 import (
 	"encoding/csv"
@@ -23,7 +23,7 @@ func TestCSVReader(t *testing.T) {
 		{
 			name:    "case1: should return csv records as slice",
 			args:    args{"sample.csv"},
-			want:    CSV_Reader("sample.csv"), //sample func for testing
+			want:    CsvReader("sample.csv"), //sample func for testing
 			wantErr: false,
 		},
 		{
@@ -53,13 +53,18 @@ func TestCSVReader(t *testing.T) {
 }
 
 // sample test function for CSVReader
-func CSV_Reader(filename string) [][]string {
+func CsvReader(filename string) [][]string {
 	file, err := os.Open(filename)
 	if err != nil {
 		log.Fatal(err)
 		return nil
 	}
-	defer file.Close()
+	defer func(file *os.File) {
+		err := file.Close()
+		if err != nil {
+			panic(err)
+		}
+	}(file)
 
 	reader := csv.NewReader(file)
 	records, err := reader.ReadAll()

@@ -1,4 +1,4 @@
-package mongoimport
+package csv
 
 import (
 	"encoding/csv"

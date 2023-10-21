@@ -23,7 +23,7 @@ func TestJsonReader(t *testing.T) {
 		{
 			name:    "case 1 should return json entries as a map",
 			args:    args{filename: "test.json"},
-			want:    JSONFile_Reader("test.json"),
+			want:    JsonfileReader("test.json"),
 			wantErr: false,
 		},
 		{
@@ -52,8 +52,8 @@ func TestJsonReader(t *testing.T) {
 	}
 }
 
-// JSONFile_Reader test function output
-func JSONFile_Reader(filename string) map[string]interface{} {
+// JsonfileReader test function output
+func JsonfileReader(filename string) map[string]interface{} {
 	jsonfile, err := os.Open(filename)
 	if err != nil {
 		return nil
@@ -89,13 +89,12 @@ func JSONFile_Reader(filename string) map[string]interface{} {
 
 // Running tool: C:\Program Files\Go\bin\go.exe test -timeout 30s -run ^TestJsonReader$ github.com/Livingstone-Billy/mongo-import
 
-// === RUN   TestJsonReader
-// === RUN   TestJsonReader/case_1_should_return_json_entries_as_a_map
-// --- PASS: TestJsonReader/case_1_should_return_json_entries_as_a_map (0.00s)
-// === RUN   TestJsonReader/case_2_throw_error_for_non_json_file_passed
-// --- PASS: TestJsonReader/case_2_throw_error_for_non_json_file_passed (0.00s)
-// === RUN   TestJsonReader/case_3_throw_error_for_non-existent_file
-// --- PASS: TestJsonReader/case_3_throw_error_for_non-existent_file (0.00s)
-// --- PASS: TestJsonReader (0.00s)
-// PASS
-// ok      github.com/Livingstone-Billy/mongo-import       0.416s
+// === RUN TestJsonReader === RUN
+// TestJsonReader/case_1_should_return_json_entries_as_a_map --- PASS:
+// TestJsonReader/case_1_should_return_json_entries_as_a_map (0.00s) === RUN
+// TestJsonReader/case_2_throw_error_for_non_json_file_passed --- PASS:
+// TestJsonReader/case_2_throw_error_for_non_json_file_passed (0.00s) === RUN
+// TestJsonReader/case_3_throw_error_for_non-existent_file --- PASS:
+// TestJsonReader/case_3_throw_error_for_non-existent_file (0.00s) --- PASS:
+// TestJsonReader (0.00s) PASS ok github.com/Livingstone-Billy/mongo-import
+// 0.416s
