@@ -7,33 +7,40 @@ import (
 	"strings"
 )
 
-func CSVExport(headers, records []string, filename string) (*os.File, error) {
+func CSVExport(headers []string, records []string, filename string) (int, error) {
 	substring := strings.Split(filename, ".")
 	if strings.Compare(substring[len(substring)-1], "csv") != 0 {
-		panic(errors.New("file must be csv"))
+		err := errors.New("file must be csv")
+		//panic()
+		return 0, err
 	}
 	file, err := os.Create(filename)
 	if err != nil {
 		panic(err)
-		return nil, err
 	}
 	defer func(file *os.File) {
 		err := file.Close()
 		if err != nil {
 			panic(err)
-			return
 		}
 	}(file)
+
 	writer := csv.NewWriter(file)
-	err = writer.Write(headers)
-	if err != nil {
-		panic(err)
-		return nil, err
+	if err := writer.Write(headers); err != nil {
+		return 0, err
 	}
-	err = writer.Write(records)
-	if err != nil {
-		panic(err)
-		return nil, err
+	if err := writer.Write(records); err != nil {
+		return 0, err
 	}
-	return file, nil
+	writer.Flush()
+	if err := writer.Error(); err != nil {
+		return 0, err
+	}
+	info, _ := file.Stat()
+	return int(info.Size()), nil
 }
+
+////ExtHeaders func  extracts headers from field names assume all docs are identical
+//func ExtHeaders()[]string{
+//
+//}
