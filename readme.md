@@ -33,35 +33,39 @@ cd mongo-import
 package main
 
 import (
+	"context"
 	"fmt"
-	"log"
+	"github.com/stackbilly/mongo-import/csv"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"time"
-
-	mongoimport "github.com/stackbilly/mongo-import" //import package
-	"gopkg.in/mgo.v2"
 )
 
 func main() {
-	records, err := mongoimport.CSVReader("sample.csv") //read csv file records
+	//read csv records from file
+	records, err := csv.CSVReader("csv/sample.csv")
 	if err != nil {
-		log.Printf("err: %v", err)
+		panic(err)
 		return
 	}
-	session, err := mgo.Dial("localhost") //start mongodb session
+	//connect to mongodb
+	serveAPI := options.ServerAPI(options.ServerAPIVersion1)
+	opts := options.Client().ApplyURI("mongodb://localhost:27017/?directConnection=true").SetServerAPIOptions(serveAPI)
+	client, err := mongo.Connect(context.TODO(), opts)
 	if err != nil {
-		log.Printf("mongo err: %v", err)
+		panic(err)
 		return
 	}
-	defer session.Close()
-	session.SetMode(mgo.Monotonic, true)
-	coll := session.DB("test").C("example-coll")
+	collection := client.Database("admin").Collection("records")
 	start := time.Now()
-    //write records to mongodb collection
-	count := mongoimport.CSVImport(coll, records, 1, len(records)) 
+	count := csv.CSVImport(collection, records, 1, len(records))
 
 	fmt.Printf("Inserted %d docs in %v seconds", count, time.Since(start).Seconds())
 
-	// Inserted 1338 docs in 0.3729399 seconds
+	/*
+				Sample output
+		 Inserted 1338 docs in 0.3408692 seconds
+	*/
 }
 ```
 
