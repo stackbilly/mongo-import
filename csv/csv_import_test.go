@@ -1,18 +1,19 @@
 package csv
 
 import (
-	"log"
+	"context"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"gopkg.in/mgo.v2"
 )
 
 // TestCSVImport test func for CSVImport
 func TestCSVImport(t *testing.T) {
 	records := CsvReader("sample.csv")
 	recordsLen := len(records)
-	collection := getCollection()
+	collection, _ := getCollection()
 	if collection == nil {
 		t.Fatalf("Failed to establish Mongodb collection connection")
 	}
@@ -22,13 +23,14 @@ func TestCSVImport(t *testing.T) {
 }
 
 // test function to get mongo collection
-func getCollection() *mgo.Collection {
-	session, err := mgo.Dial("localhost")
+func getCollection() (*mongo.Collection, error) {
+	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
+	opts := options.Client().ApplyURI("mongodb://localhost:27017/?directConnection=true").SetServerAPIOptions(serverAPI)
+	client, err := mongo.Connect(context.TODO(), opts)
 	if err != nil {
-		log.Printf("Failed to establish connection to MongoDB: %v", err)
-		return nil
+		panic(err)
+		return nil, err
 	}
-	defer session.SetMode(mgo.Monotonic, true)
-	coll := session.DB("test").C("test-col")
-	return coll
+	collection := client.Database("admin").Collection("tests")
+	return collection, nil
 }
