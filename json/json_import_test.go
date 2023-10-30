@@ -1,18 +1,19 @@
 package json
 
 import (
-	"log"
+	"context"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"gopkg.in/mgo.v2"
 )
 
 // TestJsonImport test function for json mongodb import
 func TestJsonImport(t *testing.T) {
 	contents, _ := JSONFileReader("test.json")
 	type args struct {
-		collection *mgo.Collection
+		collection *mongo.Collection
 		contents   map[string]interface{}
 	}
 	tests := []struct {
@@ -35,22 +36,14 @@ func TestJsonImport(t *testing.T) {
 }
 
 // test function to get mongo collection
-func getJsonCollection() *mgo.Collection {
-	session, err := mgo.Dial("localhost")
+func getJsonCollection() *mongo.Collection {
+	serveAPI := options.ServerAPI(options.ServerAPIVersion1)
+	opts := options.Client().ApplyURI("mongodb://localhost:27017/?directConnection=true").SetServerAPIOptions(serveAPI)
+	client, err := mongo.Connect(context.TODO(), opts)
 	if err != nil {
-		log.Printf("Failed to establish connection to MongoDB: %v", err)
+		panic(err)
 		return nil
 	}
-	defer session.SetMode(mgo.Monotonic, true)
-	coll := session.DB("jsontest").C("json-colls")
-	return coll
+	collection := client.Database("admin").Collection("json")
+	return collection
 }
-
-// Running tool: C:\Program Files\Go\bin\go.exe test -timeout 30s -run ^TestJsonImport$ github.com/Livingstone-Billy/mongo-import
-
-// === RUN   TestJsonImport
-// === RUN   TestJsonImport/should_return_collection_count_after_insertion
-// --- PASS: TestJsonImport/should_return_collection_count_after_insertion (0.40s)
-// --- PASS: TestJsonImport (0.43s)
-// PASS
-// ok      github.com/Livingstone-Billy/mongo-import       0.499s
